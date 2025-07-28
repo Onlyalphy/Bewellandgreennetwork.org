@@ -24,7 +24,6 @@ import {
   Linkedin
 } from 'lucide-react'
 import './App.css'
-import { Helmet } from 'react-helmet-async'; // Add this import
 
 // Import images
 import logo from './assets/BEWELLANDGREENNETWORKLOGO.jpg'
@@ -95,6 +94,28 @@ function App() {
     return () => clearInterval(interval)
   }, [pillars.length])
 
+  // Update document title based on active section
+  useEffect(() => {
+    const getSeoData = (section) => {
+      switch (section) {
+        case 'home':
+          return 'Be Well and Green Network - Home';
+        case 'about':
+          return 'About Us - Be Well and Green Network';
+        case 'programs':
+          return 'Our Programs - Be Well and Green Network';
+        case 'get-involved':
+          return 'Get Involved - Be Well and Green Network';
+        case 'contact':
+          return 'Contact Us - Be Well and Green Network';
+        default:
+          return 'Be Well and Green Network';
+      }
+    };
+
+    document.title = getSeoData(activeSection);
+  }, [activeSection]);
+
   // Handle Google Form redirect
   const handleVolunteerFormRedirect = () => {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSf_sDYfr7Z1eV7XQqnbwa5k3K5maUspQ_OySUAmT_eqnBPmGg/viewform', '_blank')
@@ -119,83 +140,8 @@ function App() {
     { id: 'contact', label: 'Contact' }
   ]
 
-  // Function to get dynamic SEO data based on activeSection
-  const getSeoData = (section) => {
-    switch (section) {
-      case 'home':
-        return {
-          title: 'Be Well and Green Network - Home',
-          description: 'Official website of Be Well and Green Network. Promoting mental wellness, environmental sustainability, and community empowerment in Kenya.',
-          keywords: 'mental wellness, environmental sustainability, community empowerment, Kenya, non-profit, health, green living',
-          ogUrl: 'https://bewellandgreennetwork.org/',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-home.jpg' // Replace with actual image
-        };
-      case 'about':
-        return {
-          title: 'About Us - Be Well and Green Network',
-          description: 'Learn about the mission, vision, core values, and founder\'s story of Be Well and Green Network.',
-          keywords: 'about us, mission, vision, values, founder, Tamara Kahuthia',
-          ogUrl: 'https://bewellandgreennetwork.org/about',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-about.jpg'
-        };
-      case 'programs':
-        return {
-          title: 'Our Programs - Be Well and Green Network',
-          description: 'Explore our five pillars: Environmental Sustainability, Mental Health, Agriculture, Drugs and Addiction, and Gender Action.',
-          keywords: 'programs, environmental, mental health, agriculture, substance abuse, gender action',
-          ogUrl: 'https://bewellandgreennetwork.org/programs',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-programs.jpg'
-        };
-      case 'get-involved':
-        return {
-          title: 'Get Involved - Be Well and Green Network',
-          description: 'Join us! Volunteer, partner, or support our initiatives for a healthier, greener future.',
-          keywords: 'get involved, volunteer, donate, partnership, support',
-          ogUrl: 'https://bewellandgreennetwork.org/get-involved',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-get-involved.jpg'
-        };
-      case 'contact':
-        return {
-          title: 'Contact Us - Be Well and Green Network',
-          description: 'Reach out to Be Well and Green Network for inquiries, collaborations, or support.',
-          keywords: 'contact, email, phone, address, inquiry',
-          ogUrl: 'https://bewellandgreennetwork.org/contact',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-contact.jpg'
-        };
-      default:
-        return {
-          title: 'Be Well and Green Network',
-          description: 'Promoting wellness, sustainability, and empowerment.',
-          keywords: 'wellness, sustainability, empowerment, non-profit, Kenya',
-          ogUrl: 'https://bewellandgreennetwork.org/',
-          ogImage: 'https://bewellandgreennetwork.org/images/og-default.jpg'
-        };
-    }
-  };
-
-  const seo = getSeoData(activeSection);
-
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="keywords" content={seo.keywords} />
-
-        {/* Open Graph / Facebook Tags */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={seo.ogUrl} />
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content={seo.ogImage} />
-
-        {/* Twitter Card Tags */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={seo.ogUrl} />
-        <meta property="twitter:title" content={seo.title} />
-        <meta property="twitter:description" content={seo.description} />
-        <meta property="twitter:image" content={seo.ogImage} />
-      </Helmet>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
