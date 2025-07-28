@@ -4,14 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { 
-  Menu, 
-  X, 
-  Heart, 
-  Leaf, 
-  Users, 
-  Mail, 
-  Phone, 
+import {
+  Menu,
+  X,
+  Heart,
+  Leaf,
+  Users,
+  Mail,
+  Phone,
   Calendar,
   ArrowRight,
   CheckCircle,
@@ -24,6 +24,7 @@ import {
   Linkedin
 } from 'lucide-react'
 import './App.css'
+import { Helmet } from 'react-helmet-async'; // Add this import
 
 // Import images
 import logo from './assets/BEWELLANDGREENNETWORKLOGO.jpg'
@@ -118,8 +119,83 @@ function App() {
     { id: 'contact', label: 'Contact' }
   ]
 
+  // Function to get dynamic SEO data based on activeSection
+  const getSeoData = (section) => {
+    switch (section) {
+      case 'home':
+        return {
+          title: 'Be Well and Green Network - Home',
+          description: 'Official website of Be Well and Green Network. Promoting mental wellness, environmental sustainability, and community empowerment in Kenya.',
+          keywords: 'mental wellness, environmental sustainability, community empowerment, Kenya, non-profit, health, green living',
+          ogUrl: 'https://bewellandgreennetwork.org/',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-home.jpg' // Replace with actual image
+        };
+      case 'about':
+        return {
+          title: 'About Us - Be Well and Green Network',
+          description: 'Learn about the mission, vision, core values, and founder\'s story of Be Well and Green Network.',
+          keywords: 'about us, mission, vision, values, founder, Tamara Kahuthia',
+          ogUrl: 'https://bewellandgreennetwork.org/about',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-about.jpg'
+        };
+      case 'programs':
+        return {
+          title: 'Our Programs - Be Well and Green Network',
+          description: 'Explore our five pillars: Environmental Sustainability, Mental Health, Agriculture, Drugs and Addiction, and Gender Action.',
+          keywords: 'programs, environmental, mental health, agriculture, substance abuse, gender action',
+          ogUrl: 'https://bewellandgreennetwork.org/programs',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-programs.jpg'
+        };
+      case 'get-involved':
+        return {
+          title: 'Get Involved - Be Well and Green Network',
+          description: 'Join us! Volunteer, partner, or support our initiatives for a healthier, greener future.',
+          keywords: 'get involved, volunteer, donate, partnership, support',
+          ogUrl: 'https://bewellandgreennetwork.org/get-involved',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-get-involved.jpg'
+        };
+      case 'contact':
+        return {
+          title: 'Contact Us - Be Well and Green Network',
+          description: 'Reach out to Be Well and Green Network for inquiries, collaborations, or support.',
+          keywords: 'contact, email, phone, address, inquiry',
+          ogUrl: 'https://bewellandgreennetwork.org/contact',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-contact.jpg'
+        };
+      default:
+        return {
+          title: 'Be Well and Green Network',
+          description: 'Promoting wellness, sustainability, and empowerment.',
+          keywords: 'wellness, sustainability, empowerment, non-profit, Kenya',
+          ogUrl: 'https://bewellandgreennetwork.org/',
+          ogImage: 'https://bewellandgreennetwork.org/images/og-default.jpg'
+        };
+    }
+  };
+
+  const seo = getSeoData(activeSection);
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        <meta name="keywords" content={seo.keywords} />
+
+        {/* Open Graph / Facebook Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={seo.ogUrl} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:image" content={seo.ogImage} />
+
+        {/* Twitter Card Tags */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={seo.ogUrl} />
+        <meta property="twitter:title" content={seo.title} />
+        <meta property="twitter:description" content={seo.description} />
+        <meta property="twitter:image" content={seo.ogImage} />
+      </Helmet>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -399,239 +475,111 @@ function App() {
 
           {/* Founder's Story Modal */}
           {isFounderStoryOpen && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-y-auto">
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-6">
-                    <h2 className="text-2xl font-bold text-primary">Tamara's Story</h2>
-                    <button 
-                      onClick={() => setIsFounderStoryOpen(false)}
-                      className="text-muted-foreground hover:text-primary"
-                    >
-                      <X size={24} />
-                    </button>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+              <div className="relative bg-card text-card-foreground p-8 rounded-lg shadow-lg max-w-3xl mx-4 max-h-[90vh] overflow-y-auto">
+                <button
+                  onClick={() => setIsFounderStoryOpen(false)}
+                  className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
+                >
+                  <X size={24} />
+                </button>
+                <h2 className="text-3xl font-bold mb-6 text-center text-gradient">Tamara's Story</h2>
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+                  <div className="flex-shrink-0">
+                    <img 
+                      src={tamaraImage} 
+                      alt="Tamara Kahuthia - Founder & Executive Director" 
+                      className="w-40 h-40 rounded-full object-cover shadow-md"
+                    />
                   </div>
-                  
-                  <div className="flex flex-col md:flex-row gap-6 mb-6">
-                    <div className="flex-shrink-0">
-                      <img 
-                        src={tamaraImage} 
-                        alt="Tamara Kahuthia" 
-                        className="w-48 h-48 object-cover rounded-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-3">Tamara Kahuthia - Founder & Executive Director</h3>
-                      <p className="text-muted-foreground mb-4">
-                        My activism journey began when I was just 13 years old. Growing up, I witnessed firsthand the devastating impacts of the climate crisis within my community, from failed crops and water shortages to unpredictable weather patterns that affected our livelihoods and daily life. Feeling a deep sense of urgency, I joined movements calling for climate action, driven by the vision of creating a just and liveable future for my generation and those to come.
-                      </p>
-                      <p className="text-muted-foreground mb-4">
-                        However, as my activism grew, so did the weight on my shoulders. The reality of environmental injustices, combined with personal struggles, led me into a period of deep depression and mental health challenges. It was the hardest time in my life, when I couldn't see myself victorious in my journey or my dreams. There were days I felt my light was gone, where hope felt unreachable, and each sunrise felt heavier than the last.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 text-muted-foreground">
-                    <p>
-                      But even in the darkness, I found a small flicker of light that kept me going. I sought support, slowly rebuilt myself, and discovered the power of healing. When I finally saw the end of the tunnel, I vowed never to let my experience go to waste. I promised myself that I would raise awareness about mental health and ensure no one felt alone in their struggles, especially within climate activism spaces where burnout, eco-anxiety, and depression are often hidden.
-                    </p>
-                    <p>
-                      Along the way, I saw the deep and often overlooked connection between mental health and the climate crisis. This inspired me to pursue my studies in counselling psychology, equipping myself with skills to support others while advocating for systems change.
-                    </p>
-                    <p>
-                      Today, I work to integrate environmental sustainability, mental health, reproductive health rights, agriculture, and substance abuse awareness through my organisation. I believe these issues are deeply interconnected – that food security is tied to climate resilience, that mental health cannot be separated from the environments people live in, and that bodily autonomy and freedom from substance dependency are fundamental for thriving communities.
-                    </p>
-                    <p className="font-semibold text-primary">
-                      "My journey from a young activist to a founder is rooted in my experiences of pain, healing, hope, and purpose. I share this because even in the darkest times, there is light – and it is from this light that I continue to build spaces of care, dignity, and justice for all."
+                  <div>
+                    <h3 className="text-xl font-bold">Tamara Kahuthia - Founder & Executive Director</h3>
+                    <p className="text-muted-foreground mt-2">
+                      My activism journey began when I was just 13 years old. Growing up, I witnessed firsthand the devastating impacts of the climate crisis within my community, from failed crops and water shortages to unpredictable weather patterns that affected our livelihoods and daily life. Feeling a deep sense of urgency, I joined movements calling for climate action, driven by the vision of creating a just and liveable future for my generation and those to come.
                     </p>
                   </div>
                 </div>
+                <p className="text-muted-foreground mb-4">
+                  However, as my activism grew, so did the weight on my shoulders. The reality of environmental injustices, combined with personal struggles, led me into a period of deep depression and mental health challenges. It was the hardest time in my life, when I couldn’t see myself victorious in my journey or my dreams. There were days I felt my light was gone, where hope felt unreachable, and each sunrise felt heavier than the last.
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  But even in the darkness, I found a small flicker of light that kept me going. I sought support, slowly rebuilt myself, and discovered the power of healing. When I finally saw the end of the tunnel, I vowed never to let my experience go to waste. I promised myself that I would raise awareness about mental health and ensure no one felt alone in their struggles, especially within climate activism spaces where burnout, eco-anxiety, and depression are often hidden.
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  Along the way, I saw the deep and often overlooked connection between mental health and the climate crisis. This inspired me to pursue my studies in counselling psychology, equipping myself with skills to support others while advocating for systems change.
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  Today, I work to integrate environmental sustainability, mental health, reproductive health rights, agriculture, and substance abuse awareness through my organisation. I believe these issues are deeply interconnected – that food security is tied to climate resilience, that mental health cannot be separated from the environments people live in, and that bodily autonomy and freedom from substance dependency are fundamental for thriving communities.
+                </p>
+                <p className="text-muted-foreground">
+                  My journey from a young activist to a founder is rooted in my experiences of pain, healing, hope, and purpose. I share this because even in the darkest times, there is light – and it is from this light that I continue to build spaces of care, dignity, and justice for all.
+                </p>
               </div>
             </div>
           )}
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center">
-              <img 
-                src={beWellConnect} 
-                alt="Be Well Connect Program" 
-                className="rounded-lg shadow-lg mb-4 w-full h-48 object-cover"
-              />
-              <h3 className="text-xl font-semibold mb-2">Be Well Connect</h3>
-              <p className="text-muted-foreground">
-                Our flagship mental health program connecting youth with peer support and professional resources.
-              </p>
-            </div>
-            <div className="text-center">
-              <img 
-                src={treePlanting} 
-                alt="Tree Planting Initiative" 
-                className="rounded-lg shadow-lg mb-4 w-full h-48 object-cover"
-              />
-              <h3 className="text-xl font-semibold mb-2">Green Futures</h3>
-              <p className="text-muted-foreground">
-                Environmental conservation through tree planting, clean-up drives, and sustainability education.
-              </p>
-            </div>
-            <div className="text-center">
-              <img 
-                src={communityDevelopment} 
-                alt="Community Development" 
-                className="rounded-lg shadow-lg mb-4 w-full h-48 object-cover"
-              />
-              <h3 className="text-xl font-semibold mb-2">Community Wellness</h3>
-              <p className="text-muted-foreground">
-                Holistic community development programs addressing health, education, and social justice.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-primary/5 rounded-lg p-8">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-primary mb-4">Our Impact So Far</h3>
-              <p className="text-muted-foreground">
-                Since our founding, we've made significant strides in improving community wellness and environmental sustainability.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h4 className="text-lg font-semibold mb-4 text-primary">Mental Health Impact</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">200+</div>
-                    <div className="text-sm text-muted-foreground">People Supported</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-secondary">10+</div>
-                    <div className="text-sm text-muted-foreground">Peer Counselors Trained</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h4 className="text-lg font-semibold mb-4 text-secondary">Environmental Impact</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">500+</div>
-                    <div className="text-sm text-muted-foreground">Trees Planted</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-secondary">200+</div>
-                    <div className="text-sm text-muted-foreground">Students Involved</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">200+</div>
-                <div className="text-muted-foreground">People Supported</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-secondary mb-2">500+</div>
-                <div className="text-muted-foreground">Trees Planted</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-accent mb-2">25+</div>
-                <div className="text-muted-foreground">Programs Delivered</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">10+</div>
-                <div className="text-muted-foreground">Communities Reached</div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Programs Section */}
-      <section id="programs" className="section-padding bg-muted/50">
+      {/* Our Programs Section */}
+      <section id="programs" className="section-padding bg-secondary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Our Programs</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We offer comprehensive programs across our five pillars, designed to create lasting 
-              positive change in communities while addressing interconnected challenges.
+            <p className="text-lg text-muted-foreground">
+              Driving change through integrated initiatives across our five core pillars.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-5 gap-8">
-            {pillars.map((pillar, index) => (
-              <Card key={pillar.id} className="card-hover group">
-                <CardHeader className="text-center">
-                  <div className="relative h-48 rounded-lg overflow-hidden mb-4">
-                    <img 
-                      src={pillar.image}
-                      alt={pillar.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      {React.createElement(pillar.icon, {
-                        className: "h-8 w-8 text-white mb-2"
-                      })}
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg">{pillar.title}</CardTitle>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {pillars.map((pillar) => (
+              <Card key={pillar.id} className="card-hover">
+                <CardHeader>
+                  {React.createElement(pillar.icon, { className: "h-12 w-12 text-primary mb-4" })}
+                  <CardTitle>{pillar.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">
-                    {pillar.description}
-                  </p>
+                  <p className="text-muted-foreground">{pillar.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="mt-16 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Integrated Approach</h3>
-              <p className="text-muted-foreground mb-6">
-                Our programs are designed to work synergistically, recognizing that mental health, 
-                environmental sustainability, and social justice are interconnected. By addressing 
-                these areas together, we create more comprehensive and lasting solutions.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Evidence-Based Methods</h4>
-                    <p className="text-sm text-muted-foreground">
-                      All our programs are grounded in research and best practices from psychology, 
-                      environmental science, and community development.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Community-Led Solutions</h4>
-                    <p className="text-sm text-muted-foreground">
-                      We work with communities to identify their specific needs and develop 
-                      culturally appropriate interventions.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Youth Leadership</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Young people are at the center of our programs, both as beneficiaries 
-                      and as leaders driving change in their communities.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <img 
-                src={advocacyImage} 
-                alt="Program integration and community impact" 
-                className="rounded-lg shadow-lg w-full"
-              />
+          <div className="mt-16 text-center">
+            <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <Card className="card-hover">
+                <CardHeader>
+                  <Users className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle>10+ Peer Counsellors Trained</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Empowering youth with mental health first aid skills.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="card-hover">
+                <CardHeader>
+                  <TreePine className="h-12 w-12 text-secondary mb-4" />
+                  <CardTitle>500+ Trees Planted</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Contributing to reforestation and combating climate change.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="card-hover">
+                <CardHeader>
+                  <Heart className="h-12 w-12 text-accent mb-4" />
+                  <CardTitle>1000+ Lives Touched</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Through our various community outreach and support programs.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
@@ -642,355 +590,83 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Get Involved</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Join our mission to create healthier communities and a more sustainable world. 
-              There are many ways to contribute and make a difference.
+            <p className="text-lg text-muted-foreground">
+              Join our mission to create a healthier, greener, and more equitable world.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="card-hover text-center">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Volunteer Application Card */}
+            <Card className="card-hover">
               <CardHeader>
-                <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-                <CardTitle>Volunteer</CardTitle>
+                <Users className="h-12 w-12 text-primary mb-4" />
+                <CardTitle>Volunteer with Us</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-6">
-                  Join our team of dedicated volunteers and help us deliver programs 
-                  that make a real difference in people's lives.
-                </p>
-                <Button 
-                  onClick={() => scrollToSection('volunteer-form')}
-                  className="btn-primary"
-                >
-                  Become a Volunteer
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover text-center">
-              <CardHeader>
-                <Heart className="h-12 w-12 text-secondary mx-auto mb-4" />
-                <CardTitle>Donate</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-6">
-                  Your financial support helps us expand our programs and reach 
-                  more communities in need of mental health and environmental support.
-                </p>
-                <Button 
-                  onClick={() => scrollToSection('donation')}
-                  className="btn-secondary"
-                >
-                  Make a Donation
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover text-center">
-              <CardHeader>
-                <Leaf className="h-12 w-12 text-accent mx-auto mb-4" />
-                <CardTitle>Partner</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-6">
-                  Organizations and businesses can partner with us to amplify 
-                  our impact and create sustainable change together.
-                </p>
-                <div className="space-y-3">
-                  <div className="text-left">
-                    <h4 className="font-semibold text-sm mb-1">Partnership Options:</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Volunteering</li>
-                      <li>• Corporate Sponsorship</li>
-                      <li>• Individual Sponsorship</li>
-                    </ul>
-                  </div>
-                </div>
-                <Button 
-                  variant="outline" 
-                  className="border-accent text-accent hover:bg-accent hover:text-white mt-4"
-                  onClick={() => window.open('mailto:info@bewellandgreen.org?subject=Partnership Inquiry', '_blank')}
-                >
-                  Explore Partnership
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Why Get Involved?</h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Make a Real Impact</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Your involvement directly contributes to improving mental health outcomes 
-                      and environmental sustainability in communities.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Build Connections</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Connect with like-minded individuals who share your passion 
-                      for wellness and environmental stewardship.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-semibold mb-1">Develop Skills</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Gain valuable experience in community organizing, environmental action, 
-                      and mental health advocacy.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <img 
-                src={advocacyImage} 
-                alt="Community advocacy and engagement" 
-                className="rounded-lg shadow-lg w-full"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Volunteer Form Section */}
-      <section id="volunteer-form" className="section-padding bg-muted/50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Volunteer Application</h2>
-            <p className="text-xl text-muted-foreground">
-              Ready to make a difference? Click the button below to fill out our volunteer application form.
-            </p>
-          </div>
-
-          <Card className="max-w-2xl mx-auto">
-            <CardHeader>
-              <CardTitle className="text-center">Join Our Volunteer Team</CardTitle>
-              <CardDescription className="text-center">
-                Complete our comprehensive volunteer application to get started with Be Well and Green Network.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center space-y-6">
-              <div className="bg-primary/5 rounded-lg p-6">
-                <Users className="h-16 w-16 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Ready to Get Started?</h3>
-                <p className="text-muted-foreground mb-6">
-                  Our volunteer application form will help us understand your interests, skills, 
-                  and availability so we can match you with the perfect volunteer opportunities.
+                <p className="text-muted-foreground mb-4">
+                  Passionate about mental wellness, environmental sustainability, or social justice? Join our team of dedicated volunteers and make a tangible difference in communities.
                 </p>
                 <Button 
                   onClick={handleVolunteerFormRedirect}
-                  className="btn-primary text-lg px-8 py-3"
-                  size="lg"
+                  className="w-full bg-primary hover:bg-primary/90 flex items-center justify-center gap-2"
                 >
-                  Fill Out Volunteer Application
-                  <ExternalLink className="ml-2 h-5 w-5" />
+                  Fill Out Volunteer Application <ExternalLink size={16} />
                 </Button>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Quick & Easy</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Secure Form</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Fast Response</span>
-                </div>
-              </div>
-              
-              <div className="text-sm text-muted-foreground">
-                <p>
-                  After submitting your application, our team will review it and contact you within 
-                  3-5 business days with next steps and volunteer opportunities that match your interests.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Donation Section */}
-      <section id="donation" className="section-padding">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Support Our Mission</h2>
-            <p className="text-xl text-muted-foreground">
-              Your donation helps us expand our mental health and environmental programs to reach more communities.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            <Card>
-              <CardHeader>
-                <CardTitle>Make a Donation</CardTitle>
-                <CardDescription>
-                  Choose a donation amount and support our work through PayPal.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="h-16 text-lg font-semibold">
-                    $25
-                  </Button>
-                  <Button variant="outline" className="h-16 text-lg font-semibold">
-                    $50
-                  </Button>
-                  <Button variant="outline" className="h-16 text-lg font-semibold">
-                    $100
-                  </Button>
-                  <Button variant="outline" className="h-16 text-lg font-semibold">
-                    $250
-                  </Button>
-                </div>
-                
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-4">Or enter a custom amount</p>
-                  <Input 
-                    type="number" 
-                    placeholder="Enter amount in USD" 
-                    className="text-center text-lg mb-4"
-                  />
-                </div>
-
-                {/* PayPal Button */}
-                <div className="text-center">
-                  <form action="https://www.paypal.com/donate" method="post" target="_top">
-                    <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID" />
-                    <Button 
-                      type="submit" 
-                      className="btn-primary w-full h-12 text-lg"
-                      style={{backgroundColor: '#0070ba'}}
-                    >
-                      Donate with PayPal
-                    </Button>
-                  </form>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Secure payment processing through PayPal
-                  </p>
+                <div className="mt-4 text-sm text-muted-foreground flex items-center justify-center space-x-4">
+                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Quick</span>
+                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Secure</span>
+                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Fast Response</span>
                 </div>
               </CardContent>
             </Card>
 
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <Heart className="h-5 w-5 text-primary" />
-                    <span>How Your Donation Helps</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-primary/10 rounded-full p-2 mt-1">
-                      <span className="text-primary font-bold text-sm">$25</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Mental Health Session</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Provides one counseling session for someone in need
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-secondary/10 rounded-full p-2 mt-1">
-                      <span className="text-secondary font-bold text-sm">$50</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Tree Planting Kit</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Supplies for planting 10 trees in community spaces
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-accent/10 rounded-full p-2 mt-1">
-                      <span className="text-accent font-bold text-sm">$100</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Workshop Materials</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Educational materials for one community workshop
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-primary/10 rounded-full p-2 mt-1">
-                      <span className="text-primary font-bold text-sm">$250</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">Full Program Support</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Sponsors a complete program for one community
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Other Ways to Give</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span className="text-sm">Monthly recurring donations</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span className="text-sm">Corporate sponsorship opportunities</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span className="text-sm">In-kind donations (supplies, equipment)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span className="text-sm">Fundraising events and campaigns</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            {/* Explore Partnerships Card */}
+            <Card className="card-hover">
+              <CardHeader>
+                <HandHeart className="h-12 w-12 text-accent mb-4" />
+                <CardTitle>Explore Partnerships</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  We believe in the power of collaboration. Partner with us to amplify our impact and reach more communities.
+                </p>
+                <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-1">
+                  <li>Volunteering</li>
+                  <li>Corporate Sponsorship</li>
+                  <li>Individual Sponsorship</li>
+                </ul>
+                <Button 
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full bg-accent hover:bg-accent/90"
+                >
+                  Contact Us About Partnerships
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section-padding bg-muted/50">
+      <section id="contact" className="section-padding bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Contact Us</h2>
-            <p className="text-xl text-muted-foreground">
-              Get in touch with us to learn more about our programs or discuss partnership opportunities.
+            <p className="text-lg text-muted-foreground">
+              We'd love to hear from you. Reach out with any questions or collaboration ideas.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            {/* Contact Info */}
             <div>
               <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-start space-x-3">
                   <Mail className="h-5 w-5 text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold">Email</h4>
-                      <p className="text-muted-foreground">info@bewellandgreennetwork.org</p>
+                      <p className="text-muted-foreground">Bewellandgreennetwork@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -1000,26 +676,14 @@ function App() {
                     <p className="text-muted-foreground">+254 700 123 456</p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4">Office Hours</h3>
-              <div className="space-y-2 text-muted-foreground">
-                <div className="flex justify-between">
-                  <span>Monday - Friday</span>
-                  <span>9:00 AM - 5:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday</span>
-                  <span>10:00 AM - 2:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday</span>
-                  <span>Closed</span>
+                <div className="flex items-start space-x-3">
+                  <Calendar className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-semibold">Working Hours</h4>
+                    <p className="text-muted-foreground">Mon - Fri: 9:00 AM - 5:00 PM</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
             <div className="mt-8">
               <h3 className="text-xl font-bold mb-4">Follow Us</h3>
@@ -1071,65 +735,41 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <img src={logo} alt="Be Well and Green Network" className="h-10 w-10 rounded-full" />
-                <span className="font-bold text-lg">Be Well and Green Network</span>
-              </div>
-              <p className="text-white/80 text-sm">
-                Promoting wellness, sustainability, and empowerment through integrated community action.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <div className="space-y-2 text-sm">
-                <button onClick={() => scrollToSection('about')} className="block text-white/80 hover:text-white">
-                  About Us
-                </button>
-                <button onClick={() => scrollToSection('programs')} className="block text-white/80 hover:text-white">
-                  Our Programs
-                </button>
-                <button onClick={() => scrollToSection('get-involved')} className="block text-white/80 hover:text-white">
-                  Get Involved
-                </button>
-                <button onClick={() => scrollToSection('contact')} className="block text-white/80 hover:text-white">
-                  Contact
-                </button>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Our Pillars</h4>
-              <div className="space-y-2 text-sm text-white/80">
-                <div>Environmental Sustainability</div>
-                <div>Mental Health</div>
-                <div>Agriculture</div>
-                <div>Drugs and Addiction</div>
-                <div>Gender Action</div>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Contact Info</h4>
-              <div className="space-y-2 text-sm text-white/80">
-                <div>info@bewellandgreennetwork.org</div>
-                <div>+254 700 123 456</div>
-                <div>Nairobi, Kenya</div>
-              </div>
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 className="font-semibold mb-4">Be Well and Green Network</h4>
+            <p className="text-sm text-white/80">
+              Dedicated to fostering mental wellness, environmental sustainability, and social justice.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm text-white/80">
+              <li><button onClick={() => scrollToSection('home')} className="hover:text-primary transition-colors">Home</button></li>
+              <li><button onClick={() => scrollToSection('about')} className="hover:text-primary transition-colors">About Us</button></li>
+              <li><button onClick={() => scrollToSection('programs')} className="hover:text-primary transition-colors">Our Programs</button></li>
+              <li><button onClick={() => scrollToSection('get-involved')} className="hover:text-primary transition-colors">Get Involved</button></li>
+              <li><button onClick={() => scrollToSection('contact')} className="hover:text-primary transition-colors">Contact</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Contact Info</h4>
+            <div className="space-y-2 text-sm text-white/80">
+              <div>Bewellandgreennetwork@gmail.com</div>
+              <div>+254 700 123 456</div>
+              <div>Nairobi, Kenya</div>
             </div>
           </div>
-          
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm text-white/80">
-            <p>&copy; 2025 Be Well and Green Network. All rights reserved.</p>
-          </div>
+        </div>
+        
+        <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm text-white/80">
+          <p>&copy; 2025 Be Well and Green Network. All rights reserved.</p>
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
