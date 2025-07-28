@@ -387,200 +387,165 @@ function App() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Youth empowerment</span>
+                    <span>Empowerment</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Equality and justice</span>
+                    <span>Collaboration</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Integrity</span>
+                    <span>Innovation</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Founder's Story Section */}
-          <div className="mb-16">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-primary mb-4">Meet Our Founder</h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Discover the inspiring journey of Tamara Kahuthia, whose personal experiences with climate activism and mental health challenges led to the creation of Be Well and Green Network.
-                </p>
-                <Button 
-                  onClick={() => setIsFounderStoryOpen(true)}
-                  className="bg-primary hover:bg-primary/90"
-                >
-                  Read Tamara's Story
-                </Button>
-              </div>
-              <div className="flex-shrink-0">
-                <div 
-                  className="w-32 h-32 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg"
-                  onClick={() => setIsFounderStoryOpen(true)}
-                >
+          {/* Founder's Story */}
+          <Card className="card-hover mb-16">
+            <CardHeader>
+              <CardTitle className="text-2xl text-center">Meet Our Founder</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div className="text-center lg:text-left">
                   <img 
                     src={tamaraImage} 
                     alt="Tamara Kahuthia - Founder" 
-                    className="w-full h-full object-cover"
+                    className="w-64 h-64 rounded-full mx-auto lg:mx-0 mb-6 object-cover"
                   />
+                  <h3 className="text-xl font-bold mb-2">Tamara Kahuthia</h3>
+                  <p className="text-muted-foreground mb-4">Founder & Executive Director</p>
+                  <Button 
+                    onClick={() => setIsFounderStoryOpen(!isFounderStoryOpen)}
+                    variant="outline"
+                    className="mb-4"
+                  >
+                    {isFounderStoryOpen ? 'Hide Story' : 'Read Her Story'}
+                  </Button>
+                </div>
+                <div>
+                  <p className="text-muted-foreground mb-4">
+                    Tamara Kahuthia is a passionate advocate for mental health, environmental sustainability, and social justice. With a background in psychology and community development, she founded Be Well and Green Network to address the interconnected challenges facing young people and communities today.
+                  </p>
+                  {isFounderStoryOpen && (
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>
+                        Growing up in Nairobi, Tamara witnessed firsthand the impact of environmental degradation and mental health challenges on her community. She realized that these issues were deeply interconnected and required a holistic approach to create lasting change.
+                      </p>
+                      <p>
+                        After completing her studies in psychology, Tamara worked with various NGOs and community organizations, gaining valuable experience in program development, advocacy, and youth empowerment. She noticed that many initiatives addressed single issues in isolation, missing the opportunity to create comprehensive solutions.
+                      </p>
+                      <p>
+                        In 2023, Tamara founded Be Well and Green Network with the vision of creating an organization that would address mental health, environmental sustainability, and social justice as interconnected pillars of community well-being. Her leadership has been instrumental in developing innovative programs that empower young people to become agents of change in their communities.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="card-hover">
-              <CardHeader>
-                <Heart className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>Mental Health Support</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Providing accessible mental health resources, counseling services, and support groups 
-                  to strengthen community wellbeing.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover">
-              <CardHeader>
-                <Leaf className="h-12 w-12 text-secondary mb-4" />
-                <CardTitle>Environmental Action</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Leading tree planting initiatives, conservation projects, and sustainable 
-                  development programs to protect our environment.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover">
-              <CardHeader>
-                <Users className="h-12 w-12 text-accent mb-4" />
-                <CardTitle>Community Engagement</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Building strong, connected communities through education, advocacy, 
-                  and collaborative action for positive change.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Founder's Story Modal */}
-          {isFounderStoryOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-              <div className="relative bg-card text-card-foreground p-8 rounded-lg shadow-lg max-w-3xl mx-4 max-h-[90vh] overflow-y-auto">
-                <button
-                  onClick={() => setIsFounderStoryOpen(false)}
-                  className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
-                >
-                  <X size={24} />
-                </button>
-                <h2 className="text-3xl font-bold mb-6 text-center text-gradient">Tamara's Story</h2>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={tamaraImage} 
-                      alt="Tamara Kahuthia - Founder & Executive Director" 
-                      className="w-40 h-40 rounded-full object-cover shadow-md"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Tamara Kahuthia - Founder & Executive Director</h3>
-                    <p className="text-muted-foreground mt-2">
-                      My activism journey began when I was just 13 years old. Growing up, I witnessed firsthand the devastating impacts of the climate crisis within my community, from failed crops and water shortages to unpredictable weather patterns that affected our livelihoods and daily life. Feeling a deep sense of urgency, I joined movements calling for climate action, driven by the vision of creating a just and liveable future for my generation and those to come.
-                    </p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  However, as my activism grew, so did the weight on my shoulders. The reality of environmental injustices, combined with personal struggles, led me into a period of deep depression and mental health challenges. It was the hardest time in my life, when I couldn’t see myself victorious in my journey or my dreams. There were days I felt my light was gone, where hope felt unreachable, and each sunrise felt heavier than the last.
-                </p>
-                <p className="text-muted-foreground mb-4">
-                  But even in the darkness, I found a small flicker of light that kept me going. I sought support, slowly rebuilt myself, and discovered the power of healing. When I finally saw the end of the tunnel, I vowed never to let my experience go to waste. I promised myself that I would raise awareness about mental health and ensure no one felt alone in their struggles, especially within climate activism spaces where burnout, eco-anxiety, and depression are often hidden.
-                </p>
-                <p className="text-muted-foreground mb-4">
-                  Along the way, I saw the deep and often overlooked connection between mental health and the climate crisis. This inspired me to pursue my studies in counselling psychology, equipping myself with skills to support others while advocating for systems change.
-                </p>
-                <p className="text-muted-foreground mb-4">
-                  Today, I work to integrate environmental sustainability, mental health, reproductive health rights, agriculture, and substance abuse awareness through my organisation. I believe these issues are deeply interconnected – that food security is tied to climate resilience, that mental health cannot be separated from the environments people live in, and that bodily autonomy and freedom from substance dependency are fundamental for thriving communities.
-                </p>
-                <p className="text-muted-foreground">
-                  My journey from a young activist to a founder is rooted in my experiences of pain, healing, hope, and purpose. I share this because even in the darkest times, there is light – and it is from this light that I continue to build spaces of care, dignity, and justice for all.
-                </p>
-              </div>
-            </div>
-          )}
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      {/* Our Programs Section */}
-      <section id="programs" className="section-padding bg-secondary/10">
+      {/* Programs Section */}
+      <section id="programs" className="section-padding bg-muted/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Our Programs</h2>
-            <p className="text-lg text-muted-foreground">
-              Driving change through integrated initiatives across our five core pillars.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              We work across five interconnected pillars to create comprehensive solutions for community transformation.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pillars.map((pillar) => (
-              <Card key={pillar.id} className="card-hover">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {pillars.map((pillar, index) => (
+              <Card key={pillar.id} className="card-hover group">
+                <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <img 
+                    src={pillar.image} 
+                    alt={pillar.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    {React.createElement(pillar.icon, {
+                      className: "h-8 w-8 text-white"
+                    })}
+                  </div>
+                </div>
                 <CardHeader>
-                  {React.createElement(pillar.icon, { className: "h-12 w-12 text-primary mb-4" })}
-                  <CardTitle>{pillar.title}</CardTitle>
+                  <CardTitle className="text-xl">{pillar.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{pillar.description}</p>
+                  <p className="text-muted-foreground mb-4">{pillar.description}</p>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Learn More <ArrowRight className="ml-2" size={16} />
+                  </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card className="card-hover">
-                <CardHeader>
-                  <Users className="h-12 w-12 text-primary mb-4" />
-                  <CardTitle>10+ Peer Counsellors Trained</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Empowering youth with mental health first aid skills.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="card-hover">
-                <CardHeader>
-                  <TreePine className="h-12 w-12 text-secondary mb-4" />
-                  <CardTitle>500+ Trees Planted</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Contributing to reforestation and combating climate change.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="card-hover">
-                <CardHeader>
-                  <Heart className="h-12 w-12 text-accent mb-4" />
-                  <CardTitle>1000+ Lives Touched</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Through our various community outreach and support programs.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Program Highlights */}
+          <div className="mt-16 grid lg:grid-cols-3 gap-8">
+            <Card className="card-hover">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TreePine className="h-6 w-6 text-primary" />
+                  Tree Planting Initiative
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <img 
+                  src={treePlanting} 
+                  alt="Tree Planting Event" 
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+                <p className="text-muted-foreground">
+                  Our community tree planting events have resulted in over 1,000 trees planted across Nairobi, contributing to urban reforestation and environmental education.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="card-hover">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Heart className="h-6 w-6 text-primary" />
+                  BeWell Connect
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <img 
+                  src={beWellConnect} 
+                  alt="BeWell Connect Program" 
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+                <p className="text-muted-foreground">
+                  Our mental health support program provides counseling, peer support groups, and wellness workshops to promote emotional well-being in communities.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="card-hover">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-6 w-6 text-primary" />
+                  Community Development
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <img 
+                  src={communityDevelopment} 
+                  alt="Community Development" 
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+                <p className="text-muted-foreground">
+                  We work directly with communities to identify needs, develop solutions, and implement sustainable programs that create lasting positive change.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -590,146 +555,256 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Get Involved</h2>
-            <p className="text-lg text-muted-foreground">
-              Join our mission to create a healthier, greener, and more equitable world.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Join us in creating positive change. There are many ways to support our mission and make a difference in your community.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Volunteer Application Card */}
-            <Card className="card-hover">
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            <Card className="card-hover text-center">
               <CardHeader>
-                <Users className="h-12 w-12 text-primary mb-4" />
-                <CardTitle>Volunteer with Us</CardTitle>
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <HandHeart className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Volunteer</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  Passionate about mental wellness, environmental sustainability, or social justice? Join our team of dedicated volunteers and make a tangible difference in communities.
+                <p className="text-muted-foreground mb-6">
+                  Join our team of dedicated volunteers and contribute your skills to meaningful projects that make a real difference.
                 </p>
                 <Button 
                   onClick={handleVolunteerFormRedirect}
-                  className="w-full bg-primary hover:bg-primary/90 flex items-center justify-center gap-2"
+                  className="w-full"
                 >
-                  Fill Out Volunteer Application <ExternalLink size={16} />
+                  Apply to Volunteer
                 </Button>
-                <div className="mt-4 text-sm text-muted-foreground flex items-center justify-center space-x-4">
-                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Quick</span>
-                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Secure</span>
-                  <span className="flex items-center"><CheckCircle size={14} className="mr-1 text-green-500" /> Fast Response</span>
-                </div>
               </CardContent>
             </Card>
 
-            {/* Explore Partnerships Card */}
-            <Card className="card-hover">
+            <Card className="card-hover text-center">
               <CardHeader>
-                <HandHeart className="h-12 w-12 text-accent mb-4" />
-                <CardTitle>Explore Partnerships</CardTitle>
+                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="h-8 w-8 text-secondary" />
+                </div>
+                <CardTitle className="text-xl">Partner</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  We believe in the power of collaboration. Partner with us to amplify our impact and reach more communities.
+                <p className="text-muted-foreground mb-6">
+                  Collaborate with us to amplify impact. We welcome partnerships with organizations, schools, and businesses.
                 </p>
-                <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-1">
-                  <li>Volunteering</li>
-                  <li>Corporate Sponsorship</li>
-                  <li>Individual Sponsorship</li>
-                </ul>
                 <Button 
+                  variant="outline" 
+                  className="w-full"
                   onClick={() => scrollToSection('contact')}
-                  className="w-full bg-accent hover:bg-accent/90"
                 >
-                  Contact Us About Partnerships
+                  Explore Partnership
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="card-hover text-center">
+              <CardHeader>
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="h-8 w-8 text-accent" />
+                </div>
+                <CardTitle className="text-xl">Support</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-6">
+                  Your financial support helps us expand our programs and reach more communities in need.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => scrollToSection('contact')}
+                >
+                  Learn How to Support
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Call to Action */}
+          <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-white text-center">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+              Ready to Make a Difference?
+            </h3>
+            <p className="text-xl mb-8 text-white/90">
+              Join our community of changemakers and help us build a healthier, greener future for all.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={handleVolunteerFormRedirect}
+                size="lg" 
+                className="bg-white text-primary hover:bg-white/90"
+              >
+                Get Started Today <ArrowRight className="ml-2" size={20} />
+              </Button>
+              <Button 
+                onClick={() => scrollToSection('contact')}
+                variant="outline" 
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-primary"
+              >
+                Contact Us
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section-padding bg-gray-50">
+      <section id="contact" className="section-padding bg-muted/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">Contact Us</h2>
-            <p className="text-lg text-muted-foreground">
-              We'd love to hear from you. Reach out with any questions or collaboration ideas.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              We'd love to hear from you. Reach out to learn more about our work or explore collaboration opportunities.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            {/* Contact Info */}
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Contact Information */}
             <div>
-              <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
+              <h3 className="text-2xl font-bold mb-8">Get in Touch</h3>
+              
               <div className="space-y-6">
-                <div className="flex items-start space-x-3">
-                  <Mail className="h-5 w-5 text-primary mt-1" />
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Mail className="h-6 w-6 text-primary" />
+                  </div>
                   <div>
-                    <h4 className="font-semibold">Email</h4>
-                      <p className="text-muted-foreground">Bewellandgreennetwork@gmail.com</p>
+                    <h4 className="font-semibold mb-1">Email</h4>
+                    <p className="text-muted-foreground">Bewellandgreennetwork@gmail.com</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Phone className="h-5 w-5 text-primary mt-1" />
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Phone className="h-6 w-6 text-primary" />
+                  </div>
                   <div>
-                    <h4 className="font-semibold">Phone</h4>
+                    <h4 className="font-semibold mb-1">Phone</h4>
                     <p className="text-muted-foreground">+254 700 123 456</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Calendar className="h-5 w-5 text-primary mt-1" />
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Calendar className="h-6 w-6 text-primary" />
+                  </div>
                   <div>
-                    <h4 className="font-semibold">Working Hours</h4>
-                    <p className="text-muted-foreground">Mon - Fri: 9:00 AM - 5:00 PM</p>
+                    <h4 className="font-semibold mb-1">Office Hours</h4>
+                    <p className="text-muted-foreground">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p className="text-muted-foreground">Saturday: 10:00 AM - 2:00 PM</p>
                   </div>
                 </div>
               </div>
 
-            <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4">Follow Us</h3>
-              <div className="flex flex-wrap gap-3">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="bg-[#1877F2] text-white border-[#1877F2] hover:bg-[#166FE5] hover:border-[#166FE5] flex items-center gap-2"
-                  onClick={() => window.open('https://www.facebook.com/share/1CCgEruqKK/?mibextid=wwXIfr', '_blank')}
-                >
-                  <Facebook size={16} />
-                  Facebook
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="bg-gradient-to-r from-[#E4405F] to-[#F56040] text-white border-transparent hover:from-[#D73652] hover:to-[#E55A3C] flex items-center gap-2"
-                  onClick={() => window.open('https://www.instagram.com/bewellandgreennetwork?igsh=MWhsNTVtNmxscDdjZA%3D%3D&utm_source=qr', '_blank')}
-                >
-                  <Instagram size={16} />
-                  Instagram
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="bg-[#0A66C2] text-white border-[#0A66C2] hover:bg-[#004182] hover:border-[#004182] flex items-center gap-2"
-                  onClick={() => window.open('https://www.linkedin.com/company/bewellandgreennetwork/', '_blank')}
-                >
-                  <Linkedin size={16} />
-                  LinkedIn
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="bg-black text-white border-black hover:bg-gray-800 hover:border-gray-800 flex items-center gap-2"
-                  onClick={() => window.open('http://www.tiktok.com/@bewellandgreennetwork', '_blank')}
-                >
-                  <div className="w-4 h-4 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                    </svg>
-                  </div>
-                  TikTok
-                </Button>
+              {/* Social Media */}
+              <div className="mt-12">
+                <h4 className="font-semibold mb-4">Follow Us</h4>
+                <div className="flex flex-wrap gap-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="bg-[#1877F2] text-white border-[#1877F2] hover:bg-[#166FE5] hover:border-[#166FE5] flex items-center gap-2"
+                    onClick={() => window.open('https://www.facebook.com/profile.php?id=61566606018809&mibextid=ZbWKwL', '_blank')}
+                  >
+                    <Facebook size={16} />
+                    Facebook
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="bg-gradient-to-r from-[#E4405F] to-[#F56040] text-white border-transparent hover:from-[#D73652] hover:to-[#E55A3C] flex items-center gap-2"
+                    onClick={() => window.open('https://www.instagram.com/bewellandgreennetwork?igsh=MWhsNTVtNmxscDdjZA%3D%3D&utm_source=qr', '_blank')}
+                  >
+                    <Instagram size={16} />
+                    Instagram
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="bg-[#0A66C2] text-white border-[#0A66C2] hover:bg-[#004182] hover:border-[#004182] flex items-center gap-2"
+                    onClick={() => window.open('https://www.linkedin.com/company/bewellandgreennetwork/', '_blank')}
+                  >
+                    <Linkedin size={16} />
+                    LinkedIn
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="bg-black text-white border-black hover:bg-gray-800 hover:border-gray-800 flex items-center gap-2"
+                    onClick={() => window.open('http://www.tiktok.com/@bewellandgreennetwork', '_blank')}
+                  >
+                    <div className="w-4 h-4 flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                      </svg>
+                    </div>
+                    TikTok
+                  </Button>
+                </div>
               </div>
             </div>
+
+            {/* Contact Form */}
+            <Card className="card-hover">
+              <CardHeader>
+                <CardTitle className="text-xl">Send us a Message</CardTitle>
+                <CardDescription>
+                  Fill out the form below and we'll get back to you as soon as possible.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                        First Name
+                      </label>
+                      <Input id="firstName" placeholder="Your first name" />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                        Last Name
+                      </label>
+                      <Input id="lastName" placeholder="Your last name" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email
+                    </label>
+                    <Input id="email" type="email" placeholder="your.email@example.com" />
+                  </div>
+
+                  <div>
+                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                      Subject
+                    </label>
+                    <Input id="subject" placeholder="What is this about?" />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      Message
+                    </label>
+                    <Textarea 
+                      id="message" 
+                      placeholder="Tell us more about your inquiry..." 
+                      rows={5}
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full">
+                    Send Message <ArrowRight className="ml-2" size={16} />
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -772,4 +847,3 @@ function App() {
 }
 
 export default App;
-
