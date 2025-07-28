@@ -1116,7 +1116,7 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">Contact Info</h4>
               <div className="space-y-2 text-sm text-white/80">
-                <div>Bewellandgreennetwork@gmail.com</div>
+                <div>info@bewellandgreennetwork.org</div>
                 <div>+254 700 123 456</div>
                 <div>Nairobi, Kenya</div>
               </div>
